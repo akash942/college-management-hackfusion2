@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 interface User {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   role: "student" | "faculty" | "admin";
   department?: string;
@@ -41,25 +42,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(true);
       // In a real app, this would be an API call
       // Simulating API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Validate college email
-      if (!email.endsWith("@college.edu")) {
-        throw new Error("Only college email addresses are allowed");
-      }
+      // if (!email.endsWith("@college.edu")) {
+      //   throw new Error("Only college email addresses are allowed");
+      // }
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }), // Send email and password,
+        credentials: "include",
+      });
+
+      const data = await response.json()
 
       // Mock user data
-      const userData: User = {
-        id: "1",
-        name: "John Doe",
-        email,
-        role: "student",
-        department: "Computer Science",
-        year: 3,
-      };
+      // const userData: User = {
+      //   id: "1",
+      //   name: "John Doe",
+      //   email,
+      //   role: "student",
+      //   department: "Computer Science",
+      //   year: 3,
+      // };
 
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/");
     } catch (error: any) {
       throw new Error(error.message || "Failed to login");
@@ -78,7 +89,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       // Simulating API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const userData: User = {
         id: Date.now().toString(),
@@ -120,3 +131,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+
+/**
+ * admin email: santa_nienow@college.edu
+ */

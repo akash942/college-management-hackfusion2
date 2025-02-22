@@ -15,7 +15,6 @@ import {
   MessageSquare,
   DollarSign,
   Menu,
-  X,
   LogOut,
   Bell,
   ChevronDown,
@@ -67,6 +66,8 @@ const MainLayout = () => {
       .join("")
       .toUpperCase();
   };
+
+  // console.log(user)
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -172,18 +173,18 @@ const MainLayout = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-2">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src="" alt={user?.name || "User"} />
+                      <AvatarImage src="" alt={user?.firstName || "User"} />
                       <AvatarFallback>
-                        {user?.name ? getInitials(user.name) : "U"}
+                        {user?.firstName ? getInitials(user.firstName) : "U"}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="hidden md:inline">{user?.name}</span>
+                    <span className="hidden md:inline">{user?.firstName}</span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <div className="px-2 py-1.5">
-                    <p className="text-sm font-medium">{user?.name}</p>
+                    <p className="text-sm font-medium">{user?.firstName}</p>
                     <p className="text-xs text-muted-foreground">
                       {user?.email}
                     </p>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, Users, Calendar, FileText, Shield, MessageSquare, DollarSign, BookOpen, LucideIcon } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 interface Stats {
   activeVoters: string;
@@ -19,6 +20,7 @@ interface StatCardProps {
   icon: LucideIcon;
   description: string;
   color: string;
+  clickhandler?: () => void;
 }
 
 interface QuickAction {
@@ -27,6 +29,9 @@ interface QuickAction {
 }
 
 const Dashboard: React.FC = () => {
+
+  const navigate = useNavigate();
+  
   // Sample data - replace with actual data from your backend
   const stats: Stats = {
     activeVoters: "2,845",
@@ -39,8 +44,8 @@ const Dashboard: React.FC = () => {
     totalStudents: "3,200"
   };
 
-  const StatCard: React.FC<StatCardProps> = ({ title, value, icon: Icon, description, color }) => (
-    <Card className="hover:shadow-lg transition-shadow">
+  const StatCard: React.FC<StatCardProps> = ({ title, value, icon: Icon, description, color, clickhandler }) => (
+    <Card className="hover:shadow-lg transition-shadow" onClick={clickhandler}>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
@@ -79,6 +84,7 @@ const Dashboard: React.FC = () => {
           icon={Activity}
           description="Students participated in current election"
           color="text-blue-500"
+          clickhandler={() => navigate("/elections")}
         />
         <StatCard
           title="Pending Approvals"
